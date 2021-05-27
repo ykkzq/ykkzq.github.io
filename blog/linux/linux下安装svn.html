@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>yangkun&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="前端开发 yangkun的个人博客">
+    <link rel="preload" href="/assets/css/0.styles.aa6d0e5c.css" as="style"><link rel="preload" href="/assets/js/app.61191f8f.js" as="script"><link rel="preload" href="/assets/js/2.dc72d726.js" as="script"><link rel="preload" href="/assets/js/13.0f01b200.js" as="script"><link rel="prefetch" href="/assets/js/10.ee7c6959.js"><link rel="prefetch" href="/assets/js/11.377f38c5.js"><link rel="prefetch" href="/assets/js/12.b266b383.js"><link rel="prefetch" href="/assets/js/14.996474a8.js"><link rel="prefetch" href="/assets/js/15.d8cd1899.js"><link rel="prefetch" href="/assets/js/16.fb80a935.js"><link rel="prefetch" href="/assets/js/17.eabc9e4c.js"><link rel="prefetch" href="/assets/js/3.aced2491.js"><link rel="prefetch" href="/assets/js/4.4d64059e.js"><link rel="prefetch" href="/assets/js/5.cb5d5a29.js"><link rel="prefetch" href="/assets/js/6.965a4472.js"><link rel="prefetch" href="/assets/js/7.cfbda0a7.js"><link rel="prefetch" href="/assets/js/8.73fa1447.js"><link rel="prefetch" href="/assets/js/9.41ef645a.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.aa6d0e5c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">yangkun's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  博客
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  博客
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Node</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>前端工程化</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>linux服务器</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/linux/linux下安装svn.html" class="active sidebar-link">linux下安装svn</a></li><li><a href="/blog/linux/linux下安装node.html" class="sidebar-link">linux下安装node</a></li><li><a href="/blog/linux/linux下安装nginx.html" class="sidebar-link">linux下安装nginx</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p>运行以下命令安装 SVN。</p> <div class="language- extra-class"><pre class="language-text"><code>yum install subversion
+</code></pre></div><p>运行以下命令查看 SVN 版本。</p> <div class="language- extra-class"><pre class="language-text"><code>svnserve --version
+</code></pre></div><p>按以下步骤创建版本库：</p> <ol><li><p>运行以下命令创建目录。
+<code>mkdir /var/svn</code></p></li> <li><p>依次运行以下命令创建版本库。</p> <p><code>cd /var/svn</code> <code>svnadmin create /var/svn/mysvn</code></p></li> <li><p>依次运行以下命令查看自动生成的版本库文件。
+<code>cd mysvn</code> <code>ls</code></p> <blockquote><p>Subversion目录说明：</p> <ul><li>db目录：所有版本控制的数据存放文件。</li> <li>hooks目录：放置hook脚本文件的目录。</li> <li>locks目录：用来追踪存取文件库的客户端。</li> <li>format文件：是一个文本文件，里面只放了一个整数，表示当前文件库配置的版本号。</li> <li>conf目录：是这个仓库的配置文件（仓库的用户访问账号、权限等）。</li></ul></blockquote></li> <li><p>运行命令<code>cd conf/</code>进入 conf 目录（该 SVN 版本库配置文件）。
+返回结果如下：</p> <ul><li>authz：是权限控制文件。</li> <li>passwd：是账号密码文件。</li> <li>svnserve.conf：SVN 服务配置文件。</li></ul></li> <li><p>按以下步骤设置账号密码：</p> <ol><li>运行  <code>vi passwd</code>。</li> <li>按  <code>i</code>  键进入编辑模式。</li> <li>在  <code>[users]</code>  块中添加用户账号和密码，格式：账号=密码，比如示例中的 test = test123（注意等号两端要有一个空格）。</li> <li>按  <code>Esc</code>  键退出编辑模式，并输入  <code>:wq</code>  保存并退出。</li></ol></li> <li><p>按以下步骤设置权限：</p> <ol><li><p>运行  <code>vi authz</code>。</p></li> <li><p>按  <code>i</code>  键进入编辑模式。</p></li> <li><p>在末尾添加如下代码（其中，r 表示读，w 表示写）：</p> <ol><li><code>[/]</code></li> <li><code>test=rw</code></li></ol></li> <li><p>按  <code>Esc</code>  键退出编辑模式，并输入  <code>:wq</code>  保存并退出。</p></li></ol></li> <li><p>按以下步骤修改 svnserve.conf 文件。</p> <ol><li><p>运行命令  <code>vi svnserve.conf</code>。</p></li> <li><p>按  <code>i</code>  键进入编辑模式。</p></li> <li><p>打开以下几个注释（注意每行不能以空格开始，等号两端要有一个空格）：</p> <ol><li><code>anon-access = read #匿名用户可读，您也可以设置 anon-access = none，不允许匿名用户访问。设置为 none，可以使日志日期正常显示</code></li> <li><code>auth-access = write #授权用户可写</code></li> <li><code>password-db = passwd #使用哪个文件作为账号文件</code></li> <li><code>authz-db = authz #使用哪个文件作为权限文件</code></li> <li><code>realm = /var/svn/mysvn #认证空间名，版本库所在目录</code></li></ol></li> <li><p>按  <code>Esc</code>  键退出编辑模式，并输入  <code>:wq</code>  保存并退出。</p></li></ol></li> <li><p>运行以下命令启动 SVN 版本库。
+<code>svnserve -d -r /var/svn/</code></p></li></ol> <p>9.最后要注意服务器是否开启 svn 默认端口 3690。</p> <p>踩坑小提示：
+所有都配置完成然后准备 checkout 项目的时候报错 unable to connect to a repository url xxx, xxx Option Expected!</p> <p>原因：在我们执行<code>vi svnserve.conf</code>, 打开以下这个文件中的几个注释的时候如果在打开注释后这条命令的前面有空格，就会报这个错。</p> <p>解决方法：去掉打开注释的所有命令前的空格既可。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog/ts/进阶.html" class="prev">
+        进阶
+      </a></span> <span class="next"><a href="/blog/linux/linux下安装node.html">
+        linux下安装node
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.61191f8f.js" defer></script><script src="/assets/js/2.dc72d726.js" defer></script><script src="/assets/js/13.0f01b200.js" defer></script>
+  </body>
+</html>
