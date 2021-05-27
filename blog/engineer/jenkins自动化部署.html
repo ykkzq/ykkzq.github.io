@@ -7,7 +7,7 @@
     <meta name="generator" content="VuePress 1.4.1">
     <link rel="icon" href="/favicon.ico">
     <meta name="description" content="前端开发 yangkun的个人博客">
-    <link rel="preload" href="/assets/css/0.styles.aa6d0e5c.css" as="style"><link rel="preload" href="/assets/js/app.9381e624.js" as="script"><link rel="preload" href="/assets/js/2.dc72d726.js" as="script"><link rel="preload" href="/assets/js/7.d34c9432.js" as="script"><link rel="prefetch" href="/assets/js/10.2eb04690.js"><link rel="prefetch" href="/assets/js/3.554aa183.js"><link rel="prefetch" href="/assets/js/4.4d64059e.js"><link rel="prefetch" href="/assets/js/5.cb5d5a29.js"><link rel="prefetch" href="/assets/js/6.62d18681.js"><link rel="prefetch" href="/assets/js/8.73fa1447.js"><link rel="prefetch" href="/assets/js/9.72d8ff50.js">
+    <link rel="preload" href="/assets/css/0.styles.aa6d0e5c.css" as="style"><link rel="preload" href="/assets/js/app.27bc7615.js" as="script"><link rel="preload" href="/assets/js/2.dc72d726.js" as="script"><link rel="preload" href="/assets/js/7.2070bfd7.js" as="script"><link rel="prefetch" href="/assets/js/10.ee7c6959.js"><link rel="prefetch" href="/assets/js/11.377f38c5.js"><link rel="prefetch" href="/assets/js/12.b266b383.js"><link rel="prefetch" href="/assets/js/13.0f01b200.js"><link rel="prefetch" href="/assets/js/14.996474a8.js"><link rel="prefetch" href="/assets/js/15.d8cd1899.js"><link rel="prefetch" href="/assets/js/16.fb80a935.js"><link rel="prefetch" href="/assets/js/17.eabc9e4c.js"><link rel="prefetch" href="/assets/js/3.aced2491.js"><link rel="prefetch" href="/assets/js/4.4d64059e.js"><link rel="prefetch" href="/assets/js/5.cb5d5a29.js"><link rel="prefetch" href="/assets/js/6.62d18681.js"><link rel="prefetch" href="/assets/js/8.73fa1447.js"><link rel="prefetch" href="/assets/js/9.41ef645a.js">
     <link rel="stylesheet" href="/assets/css/0.styles.aa6d0e5c.css">
   </head>
   <body>
@@ -15,11 +15,196 @@
   博客
 </a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
   博客
-</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>js</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>前端工程化</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/engineer/jenkins自动化部署.html" class="active sidebar-link">jenkins自动化部署</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Node</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>前端工程化</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/engineer/jenkins自动化部署.html" class="active sidebar-link">jenkins自动化部署</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/engineer/jenkins自动化部署.html#安装-jenkins" class="sidebar-link">安装 jenkins</a></li><li class="sidebar-sub-header"><a href="/blog/engineer/jenkins自动化部署.html#编写-nodessh-脚本" class="sidebar-link">编写 nodessh 脚本</a></li><li class="sidebar-sub-header"><a href="/blog/engineer/jenkins自动化部署.html#配置项目" class="sidebar-link">配置项目</a></li></ul></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>linux服务器</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p>在常规的前端项目中，部署项目需要经过本地 build，压缩文件，将压缩包上传至服务器并解压文件等步骤，过程较为繁琐。所以在日常工作中就编写了一套自动化部署流程，用来告别手动上传的过程，配置使用简单，实现前端一键自动化部署。</p> <p><strong>首先咱们来理清整个过程：</strong></p> <p><code>1. 代码上传到gitlab，Jenkins检测到gitlab上代码有变化，将代码下载到自己的工作空间。</code></p> <p><code>2. 代码下载之后，Jenkins自动下载项目所需要的依赖文件。</code></p> <p><code>3. 执行package.json文件里的自定义打包命令，将打包好的文件压缩成zip文件放入linux服务器中指定的路径下。</code></p> <p><code>4. 部署成功，访问根据nginx发布的项目地址测试是否成功。</code></p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50d5708bfd18463793e3de4800c268b4~tplv-k3u1fbpfcp-watermark.image" alt="68C41962-F527-421b-881B-4C581315D708.png"></p> <p>接下来就是进行环境搭建。</p> <h2 id="安装-jenkins"><a href="#安装-jenkins" class="header-anchor">#</a> 安装 jenkins</h2> <p>下载 Jenkins epel 源</p> <p><code>wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo</code></p> <p>然后执行 <code>rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key</code></p> <p>Jenkins 运行依赖 Java 环境，需要提前配置好</p> <p>查看 java 版本信息 <code>java -version</code></p> <p>初始化 jenkins <code>yum install jenkins -y</code></p> <p>查找 java 程序的执行路径 <code>which java</code></p> <p>在 Jenkins 启动脚本添加我们的 Java 命令路径，如果在脚本的默认路径中请忽略此步骤</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1d1a6086b8ab44619f6d584ba2f2819c~tplv-k3u1fbpfcp-watermark.image" alt="911490-20190215134549962-119504242.png"></p> <p>然后执行<code>chown -R jenkins:jenkins /var/lib/jenkins/</code></p> <p>加载 jenkins 服务<code>systemctl daemon-reload</code></p> <p>执行<code>vim /var/lib/jenkins/hudson.model.UpdateCenter.xml</code>，由于较早版本中在 Jenkins 运行前按照 plugin 时可能会出现问题，将 https 修改为 http，如果没有这个文件则先启动 Jenkins，启动后如果出现问题可以打开http://IP:8080/pluginManager/advanced连接修改</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/387802a2e6734790bbba2e6a067fa60c~tplv-k3u1fbpfcp-watermark.image" alt="911490-20190215134717350-1584103592.png"></p> <p>启动服务 <code>service jenkins start</code></p> <p>检查端口是否启动，默认 8080 <code>netstat -tnlp</code></p> <p>判断 jenkins 是否下载成功并且运行正常 <code>service jenkins status</code></p> <p>这时候我们可以通过访问服务器的 8080 端口来进入 jenkins 的页面，如果打不开可以查看 8080 端口是否开放。</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2060aedb43404976aee1fccbc00e2237~tplv-k3u1fbpfcp-watermark.image" alt="A82379E5-764C-4f22-9AE1-351C0CDF50AC.png"></p> <p>然后根据 jenkins 的引导进行初始化的工作：</p> <ol><li>根据提示获取管理员的密码然后输入 jenkins 生成的密码。</li> <li>配置插件。</li> <li>创建用户。</li></ol> <h2 id="编写-nodessh-脚本"><a href="#编写-nodessh-脚本" class="header-anchor">#</a> 编写 nodessh 脚本</h2> <p>在项目根目录创建名为 buildssh 的目录，并在目录内创建 nodessh.js 文件，内容如下：</p> <div class="language- extra-class"><pre class="language-text"><code>const commander = require(&quot;commander&quot;);
+const fs = require(&quot;fs&quot;);
+const node_ssh = require(&quot;node-ssh&quot;);
+const archiver = require(&quot;archiver&quot;);
+const ssh = new node_ssh();
+
+commander
+  .version(&quot;0.1.0&quot;)
+  .option(&quot;--zip_dir [value]&quot;, &quot;subproject dir&quot;)
+  .option(&quot;--zip&quot;, &quot;need zip&quot;)
+  .option(&quot;--dist [value]&quot;, &quot;upload file name , contain surfix&quot;)
+  .option(&quot;--service [value]&quot;, &quot;gitbooks's name, folder in nginx&quot;)
+  .option(&quot;--env_mode [value]&quot;, &quot;env mode&quot;)
+  .option(&quot;--remote_host [value]&quot;, &quot;remote_host&quot;)
+  .option(&quot;--remote_user [value]&quot;, &quot;remote_user&quot;)
+  .option(&quot;--remote_pwd [value]&quot;, &quot;remote_pwd&quot;)
+  .option(&quot;--service_root [value]&quot;, &quot;service_root&quot;)
+  .parse(process.argv);
+
+if (!process.argv.slice(2).length) {
+  commander.outputHelp();
+  return;
+}
+
+if (!commander.zip_dir || !commander.dist || !commander.service) {
+  commander.outputHelp();
+  return;
+}
+
+let remote_host;
+let remote_user;
+let remote_pwd;
+let service_root;
+
+let cwd = process.cwd();
+let dist_zip = `${commander.dist}`;
+let local_zip = `${cwd}/${dist_zip}`;
+
+let service_dir = `${commander.service}`;
+
+if (commander.env_mode === &quot;test&quot;) {
+  //测试环境
+  remote_host = &quot;xxx.xxx.xxx.xxx&quot;; //服务器ip
+  remote_user = &quot;xxxx&quot;; //用户名
+  remote_pwd = &quot;xxx&quot;;  //密码
+  service_root = &quot;/usr/share/nginx/html/xxx/&quot;; //文件存放路径(也是nginx代理的前端路径)
+} else if (commander.env_mode === &quot;prod&quot;) {
+  //正式环境
+  remote_host = &quot;&quot;;
+  remote_user = &quot;&quot;;
+  remote_pwd = &quot;&quot;;
+  service_root = &quot;&quot;;
+}
+
+if (fs.existsSync(local_zip)) {
+  fs.unlinkSync(local_zip);
+}
+let output;
+let archive;
+// create a file to stream archive data to.
+if (commander.zip) {
+  output = fs.createWriteStream(local_zip);
+  archive = archiver(&quot;zip&quot;, {
+    // Sets the compression level.
+    zlib: {
+      level: 5
+    }
+  });
+
+  // listen for all archive data to be written
+  // 'close' event is fired only when a file descriptor is involved
+  output.on(&quot;close&quot;, function() {
+    console.log(archive.pointer() + &quot; total bytes&quot;);
+    console.log(
+      &quot;archiver has been finalized and the output file descriptor has closed.&quot;
+    );
+
+    upload();
+  });
+
+  // This event is fired when the data source is drained no matter what was the data source.
+  // It is not part of this library but rather from the NodeJS Stream API.
+  // @see: https://nodejs.org/api/stream.html#stream_event_end
+  output.on(&quot;end&quot;, function() {
+    console.log(&quot;Data has been drained&quot;);
+  });
+
+  // good practice to catch warnings (ie stat failures and other non-blocking errors)
+  archive.on(&quot;warning&quot;, function(err) {
+    if (err.code === &quot;ENOENT&quot;) {
+      // log warning
+      console.log(`${JSON.stringify(err)}`);
+    } else {
+      // throw error
+      throw err;
+    }
+  });
+
+  // good practice to catch this error explicitly
+  archive.on(&quot;error&quot;, function(err) {
+    throw err;
+  });
+
+  // pipe archive data to the file
+  archive.pipe(output);
+
+  // 添加src目录，第二个参数表示在压缩文件中不建立文件夹，散落在root目录
+  archive.directory(`${cwd}/${commander.zip_dir}`, false);
+
+  // 添加src目录，第二个参数表示在压缩文件中建立文件夹的名字
+  // archive.directory(`${cwd}/${commander.zip_dir}`, `${service_dir}`);
+
+  archive.finalize();
+} else {
+  // 不用压缩文件，就上传指定文件
+  upload();
+}
+
+function upload() {
+  ssh
+    .connect({
+      host: remote_host,
+      username: remote_user,
+      password: remote_pwd
+    })
+    .then(
+      () =&gt; {
+        return ssh
+          .exec(`rm -rf ${service_root}/${service_dir}/*`, [], {
+            cwd: &quot;&quot;,
+            onStdout(chunk) {
+              console.log(&quot;stdoutChunk&quot;, chunk.toString(&quot;utf8&quot;));
+            },
+            onStderr(chunk) {
+              console.log(&quot;stderrChunk&quot;, chunk.toString(&quot;utf8&quot;));
+            }
+          })
+          .then(() =&gt; {
+            console.log(&quot;开始上传文件&quot;);
+            return ssh.putFile(local_zip, `${dist_zip}`);
+          })
+          .then(() =&gt; {
+            console.log(&quot;上传完成，开始解压&quot;);
+            return ssh.exec(
+              `unzip -d ${service_root}/${service_dir} ${dist_zip}`,
+              [],
+              {
+                cwd: &quot;&quot;,
+                onStdout(chunk) {
+                  console.log(&quot;stdoutChunk&quot;, chunk.toString(&quot;utf8&quot;));
+                },
+                onStderr(chunk) {
+                  console.log(&quot;stderrChunk&quot;, chunk.toString(&quot;utf8&quot;));
+                }
+              }
+            );
+          })
+          .then(() =&gt; {
+            console.log(&quot;解压完成，删除上传文件&quot;);
+            return ssh.exec(`rm -f ${dist_zip}`, [], {
+              cwd: &quot;&quot;,
+              onStdout(chunk) {
+                console.log(&quot;stdoutChunk&quot;, chunk.toString(&quot;utf8&quot;));
+              },
+              onStderr(chunk) {
+                console.log(&quot;stderrChunk&quot;, chunk.toString(&quot;utf8&quot;));
+              }
+            });
+          })
+          .then(() =&gt; {
+            console.log(&quot;全完成&quot;);
+            return ssh.dispose();
+          });
+      },
+      error =&gt; {
+        console.log(&quot;Something's wrong&quot;);
+        console.log(error);
+      }
+    );
+}
+
+</code></pre></div><p>然后在 package.json 的 scripts 对象里面添加一条执行命令<code>&quot;pubtest&quot;: &quot;node buildssh/nodessh.js --zip --zip_dir dist --dist dist.zip --service dist --env_mode test&quot;</code></p> <h2 id="配置项目"><a href="#配置项目" class="header-anchor">#</a> 配置项目</h2> <ol><li>登录 jenkins 创建项目</li></ol> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ba76476b2dbf4df489603aac4049bc18~tplv-k3u1fbpfcp-watermark.image" alt="A82379E5-764C-4f22-9AE1-351C0CDF50AC.png"></p> <p>2.配置项目信息</p> <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c73f2ee5bc64ec3afae6007f5ef69a5~tplv-k3u1fbpfcp-watermark.image" alt="BEC85684-5EB6-4341-985F-952BFEDAABB4.png"></p> <p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7383d1f81c3247e2b63137f3eb347655~tplv-k3u1fbpfcp-watermark.image" alt="3B82454C-B5DD-45d5-8D7F-7FBA9C4CEF5B11.png"></p> <p>3.选择构建环境</p> <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fc2d84c80d084e7f8e27a841ed673e84~tplv-k3u1fbpfcp-watermark.image" alt="8DCE84FE-1CC8-46ce-8BF1-91E73F260B64222.png"></p> <p>4.编写构建命令</p> <p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/67b564c7e97c45caba2a6855882733fb~tplv-k3u1fbpfcp-watermark.image" alt="418EB611-29DC-40f9-9978-FF2E51BC6A5B333.png"></p> <p>5.点击保存和运用，进入项目首页点击立即构建，构建完成之后即可测试。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
       ←
-      <a href="/blog/js/EventLoop.html" class="prev">
-        EventLoop
-      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.9381e624.js" defer></script><script src="/assets/js/2.dc72d726.js" defer></script><script src="/assets/js/7.d34c9432.js" defer></script>
+      <a href="/blog/node/koa2+mysql环境搭建.html" class="prev">
+        koa2+mysql环境搭建
+      </a></span> <span class="next"><a href="/blog/ts/基础语法.html">
+        基础语法
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.27bc7615.js" defer></script><script src="/assets/js/2.dc72d726.js" defer></script><script src="/assets/js/7.2070bfd7.js" defer></script>
   </body>
 </html>
