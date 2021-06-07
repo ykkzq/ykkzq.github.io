@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>yangkun&#39;s blog</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="前端开发 yangkun的个人博客">
+    <link rel="preload" href="/assets/css/0.styles.aa6d0e5c.css" as="style"><link rel="preload" href="/assets/js/app.99228dae.js" as="script"><link rel="preload" href="/assets/js/2.dc72d726.js" as="script"><link rel="preload" href="/assets/js/16.21268277.js" as="script"><link rel="prefetch" href="/assets/js/10.df67b612.js"><link rel="prefetch" href="/assets/js/11.f174a2f5.js"><link rel="prefetch" href="/assets/js/12.ded0bfe3.js"><link rel="prefetch" href="/assets/js/13.1371002c.js"><link rel="prefetch" href="/assets/js/14.bc56f233.js"><link rel="prefetch" href="/assets/js/15.33b49a9d.js"><link rel="prefetch" href="/assets/js/17.c71201a2.js"><link rel="prefetch" href="/assets/js/18.b2b86138.js"><link rel="prefetch" href="/assets/js/19.afab924c.js"><link rel="prefetch" href="/assets/js/20.f6869a3d.js"><link rel="prefetch" href="/assets/js/3.0bf6612a.js"><link rel="prefetch" href="/assets/js/4.4d64059e.js"><link rel="prefetch" href="/assets/js/5.cb5d5a29.js"><link rel="prefetch" href="/assets/js/6.965a4472.js"><link rel="prefetch" href="/assets/js/7.cfbda0a7.js"><link rel="prefetch" href="/assets/js/8.73fa1447.js"><link rel="prefetch" href="/assets/js/9.41ef645a.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.aa6d0e5c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">yangkun's blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  博客
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link router-link-active">
+  博客
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Node</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog/node/koa2+mysql环境搭建.html" class="sidebar-link">koa2+mysql环境搭建</a></li><li><a href="/blog/node/pm2.html" class="active sidebar-link">pm2</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>前端工程化</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>linux服务器</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p>PM2 是 node 进程管理工具，可以利用它来简化很多 node 应用管理的繁琐任务，如性能监控、自动重启、负载均衡等，而且使用非常简单。
+全局安装，简直不能更简单。</p> <div class="language- extra-class"><pre class="language-text"><code>npm install -g pm2
+</code></pre></div><p>用 express 应用来举例。一般我们都是通过 npm start 启动应用，其实就是调用 node ./bin/www。那么，换成 pm2 就是</p> <div class="language- extra-class"><pre class="language-text"><code>pm2 start ./bin/www --watch(--watch：监听应用目录的变化，一旦发生变化，自动重启。如果要精确监听、不监听的目录，最好通过配置文件。)
+</code></pre></div><p>重启</p> <div class="language- extra-class"><pre class="language-text"><code>pm2 restart ./bin/www
+</code></pre></div><p>停止</p> <p>停止特定的应用。可以先通过 pm2 list 获取应用的名字（--name 指定的）或者进程 id。</p> <div class="language- extra-class"><pre class="language-text"><code>pm2 stop app_name|app_id
+</code></pre></div><p>如果要停止所有应用，可以</p> <div class="language- extra-class"><pre class="language-text"><code>pm2 stop all
+</code></pre></div><p>删除</p> <p>类似 pm2 stop，如下</p> <div class="language- extra-class"><pre class="language-text"><code>pm2 delete app_name|app_id
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>pm2 delete all
+</code></pre></div><p>查看进程状态</p> <div class="language- extra-class"><pre class="language-text"><code>pm2 list
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/blog/node/koa2+mysql环境搭建.html" class="prev">
+        koa2+mysql环境搭建
+      </a></span> <span class="next"><a href="/blog/engineer/jenkins自动化部署.html">
+        jenkins自动化部署
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.99228dae.js" defer></script><script src="/assets/js/2.dc72d726.js" defer></script><script src="/assets/js/16.21268277.js" defer></script>
+  </body>
+</html>
